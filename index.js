@@ -29,13 +29,15 @@ document.onkeydown = (e) => {
     document.getElementById("key-view").innerHTML = JSON.stringify(pressedKeyMap);
     if (String(e.key).toUpperCase() in noteMap) {
         let note = noteMap[String(e.key).toUpperCase()]["note"];
-        pressedNoteMap[String(note)] = true;
-        let osc = audioCtx.createOscillator();
-        osc.type = "square";
-        osc.frequency.setValueAtTime(noteMap[String(e.key).toUpperCase()]["frequency"], audioCtx.currentTime);
-        osc.connect(audioCtx.destination);
-        osc.start();
-        synth[String(note)] = osc;
+        if (!pressedNoteMap[String(note)]) {
+            pressedNoteMap[String(note)] = true;
+            let osc = audioCtx.createOscillator();
+            osc.type = "square";
+            osc.frequency.setValueAtTime(noteMap[String(e.key).toUpperCase()]["frequency"], audioCtx.currentTime);
+            osc.connect(audioCtx.destination);
+            osc.start();
+            synth[String(note)] = osc;
+        }
     }
     document.getElementById("pressed-view").innerHTML = JSON.stringify(pressedNoteMap);
 }
