@@ -23,6 +23,7 @@ const noteMap = {
     'P': { "note": 'E1', "frequency": 659.25 }
 };
 
+// if user is holding down the key for too long; the synth will keep playing
 document.onkeydown = (e) => {
     pressedKeyMap[String(e.key).toUpperCase()] = true;
     document.getElementById("key-view").innerHTML = JSON.stringify(pressedKeyMap);
