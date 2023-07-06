@@ -1,0 +1,6 @@
+#key-view {
+    width: 1250px;
+    height: 100px;
+    overflow-x: scroll;
+    overflow-y: auto;
+}
