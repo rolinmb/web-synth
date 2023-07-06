@@ -8,7 +8,7 @@
   </head>
   <body>    
     <header>
-      <h1>In-Browser Synthesizer</h1>
+      <h1 id="top-header">In-Browser Synthesizer (CURRENTLY MUTED)</h1>
     </header>
     <div id="synth-panel">
       <h3>Keys Pressed:</h3>
@@ -17,7 +17,16 @@
       <p id="pressed-view"></p>
     </div>
     <br />
-    <p>If a note is stuck "on" you should refresh your browser.</p>
+    <p>Select A Waveform (Default = Sine)</p>
+    <select id="waveform-select">
+      <option value="sine" selected="selected">Sine</option>
+      <option value="square">Square</option>
+      <option value="sawtooth">Sawtooth</option>
+      <option value="triangle">Triangle</option>
+    </select>
+    <button id="start-stop">Unmute Synthesizer</button>
+    <br />
+    <p>If a note is stuck playing you should refresh your browser or select 'Mute/Unmute Synthesizer'.</p>
     <footer>
       &copy; 2023 - Rolin Blake - Web Synthesizer
     </footer>
