@@ -77,26 +77,26 @@ document.onkeyup = (e) => {
     }
     document.getElementById("pressed-view").innerHTML = JSON.stringify(pressedNoteMap);
 };
-document.getElementById("start-stop").onclick = () => {
+function handleClick() {
     muted = !muted;
     if (muted) {
         for (const key in noteMap) {
             noteMap[key].oscillator = undefined;
         }
         document.getElementById("start-stop").innerHTML = "Mute Synthesizer";
-        document.getElementById("top-header").innerHTML = "In-Browser Synthesizer (UNMUTED)";
+        document.getElementById("top-header").innerHTML = "In-Browser Synthesizer (UNMUTED; PRESS ANY KEY TO PLAY)";
     }
     else {
         for (const key in noteMap) {
             if (noteMap[key].oscillator) {
                 noteMap[key].oscillator.stop();
             }
-            noteMap.key.oscillator = undefined;
+            noteMap[key].oscillator = undefined;
         }
-        document.getElementById("stop-start").innerHTML = "Unmute Synthesizer";
+        document.getElementById("start-stop").innerHTML = "Unmute Synthesizer";
         document.getElementById("top-header").innerHTML = "In-Browser Synthesizer (CURRENTLY MUTED)";
     }
-};
+}
 window.addEventListener('load', () => {
     try {
         audioCtx = new AudioContext();

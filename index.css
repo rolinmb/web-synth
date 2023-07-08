@@ -1,3 +1,15 @@
+body {
+    font-family: 'PT Sans', sans-serif;
+    background-image: url("bg_v4_1.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#black-key-table td {
+    font-size: 14px;
+}
+
 #key-view {
     width: 1250px;
     height: 100px;
