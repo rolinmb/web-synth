@@ -1,4 +1,5 @@
 var audioCtx;
+var ctxGain;
 var pressedKeyMap = {};
 var pressedNoteMap = {};
 var muted = false;
@@ -34,6 +35,7 @@ document.onkeydown = (e) => {
             osc.type = document.getElementById("waveform-select").value;
             osc.frequency.setValueAtTime(noteMap[String(e.key).toUpperCase()]["frequency"], audioCtx.currentTime);
             osc.connect(audioCtx.destination);
+            osc.connect(ctxGain).connect(audioCtx.destination);
             if (muted) {
                 osc.start();
             }
@@ -80,11 +82,18 @@ document.getElementById("start-stop").onclick = () => {
         document.getElementById("top-header").innerHTML = "In-Browser Synthesizer (CURRENTLY MUTED)";
     }
 };
-
+/*
+document.getElementById("gain-slider").oninput = () => {
+    document.getElementById("gain-view").innerHTML = document.getElementById("gain-slider").value;
+    ctxGain.gain.setValueAtTime(document.getElementById("gain-slider").value, audioCtx.currentTime);
+};
+*/
 window.addEventListener('load', () => {
     try {
         audioCtx = new AudioContext();
+        ctxGain = audioCtx.createGain();
+        ctxGain.connect(audioCtx.destination);
     } catch (err) {
-        alert('The JavaScript Web Audio API is not supported by this browser.');
+        alert("The JavaScript Web Audio API is not supported by this browser.");
     }
 }, false);

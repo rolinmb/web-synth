@@ -6,7 +6,7 @@
     <title>Browser Synthesizer</title>
     <link rel="stylesheet" href="index.css"/>
   </head>
-  <body>    
+  <body>
     <header>
       <h1 id="top-header">In-Browser Synthesizer (CURRENTLY MUTED)</h1>
     </header>
@@ -25,11 +25,17 @@
       <option value="triangle">Triangle</option>
     </select>
     <button id="start-stop">Unmute Synthesizer</button>
+    <!--
+    <div id="gain-slider-wrap">
+      <input id="gain-slider" type="range" class="slider" min="0" max="1" value="1" step=".01">
+      <p id="gain-view">1.0</p>
+    </div>
+    -->
     <br />
     <p>If a note is stuck playing you should refresh your browser or select 'Mute/Unmute Synthesizer'.</p>
     <footer>
       &copy; 2023 - Rolin Blake - <a href="https://github.com/rolinmb/web-synth">Web Synthesizer Repo</a>
     </footer>
   </body>
-  <script src="index.js"></script>
+  <script src="app.js"></script>
 </html>
