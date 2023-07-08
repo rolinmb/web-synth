@@ -34,7 +34,6 @@ document.onkeydown = (e) => {
             let osc = audioCtx.createOscillator();
             osc.type = document.getElementById("waveform-select").value;
             osc.frequency.setValueAtTime(noteMap[String(e.key).toUpperCase()]["frequency"], audioCtx.currentTime);
-            osc.connect(audioCtx.destination);
             osc.connect(ctxGain).connect(audioCtx.destination);
             if (muted) {
                 osc.start();
