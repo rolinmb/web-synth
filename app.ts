@@ -8,23 +8,23 @@ type Note = {
     oscillator: OscillatorNode | undefined;
 }
 
-var c0: Note = { name: 'C0', frequency: 261.63, oscillator: undefined };
-var cs0: Note = { name: 'C#0/Db0', frequency: 277.18, oscillator: undefined };
-var d0: Note = { name: 'D0', frequency: 293.66, oscillator: undefined };
-var ds0: Note = { name: 'D#0/Eb0', frequency: 311.13, oscillator: undefined };
-var e0: Note = { name: 'E0', frequency: 329.63, oscillator: undefined };
-var f0: Note = { name: 'F0', frequency: 349.23, oscillator: undefined };
-var fs0: Note = { name: 'F#0/Gb0', frequency: 369.99, oscillator: undefined };
-var g0: Note = { name: 'G0', frequency: 392.0, oscillator: undefined };
-var gs0: Note = { name: 'G#0/Ab0', frequency: 415.3, oscillator: undefined };
-var a0: Note = { name: 'A0', frequency: 440.0, oscillator: undefined };
-var as0: Note = { name: 'A#0/Bb0', frequency: 466.16, oscillator: undefined };
-var b0: Note = { name: 'B0', frequency: 493.88, oscillator: undefined };
-var c1: Note = { name: 'C1', frequency: 523.25, oscillator: undefined };
-var cs1: Note = { name: 'C#1/Db1', frequency: 554.37, oscillator: undefined };
-var d1: Note = { name: 'D1', frequency: 587.33, oscillator: undefined };
-var ds1: Note = { name: 'D#1/Eb1', frequency: 622.25, oscillator: undefined };
-var e1: Note = { name: 'E1', frequency: 659.25, oscillator: undefined };
+var c0: Note = { name: 'C4', frequency: 261.63, oscillator: undefined };
+var cs0: Note = { name: 'C#4/Db4', frequency: 277.18, oscillator: undefined };
+var d0: Note = { name: 'D4', frequency: 293.66, oscillator: undefined };
+var ds0: Note = { name: 'D#4/Eb4', frequency: 311.13, oscillator: undefined };
+var e0: Note = { name: 'E4', frequency: 329.63, oscillator: undefined };
+var f0: Note = { name: 'F4', frequency: 349.23, oscillator: undefined };
+var fs0: Note = { name: 'F#4/Gb4', frequency: 369.99, oscillator: undefined };
+var g0: Note = { name: 'G4', frequency: 392.0, oscillator: undefined };
+var gs0: Note = { name: 'G#4/Ab4', frequency: 415.3, oscillator: undefined };
+var a0: Note = { name: 'A4', frequency: 440.0, oscillator: undefined };
+var as0: Note = { name: 'A#4/Bb4', frequency: 466.16, oscillator: undefined };
+var b0: Note = { name: 'B4', frequency: 493.88, oscillator: undefined };
+var c1: Note = { name: 'C5', frequency: 523.25, oscillator: undefined };
+var cs1: Note = { name: 'C#5/Db5', frequency: 554.37, oscillator: undefined };
+var d1: Note = { name: 'D5', frequency: 587.33, oscillator: undefined };
+var ds1: Note = { name: 'D#5/Eb5', frequency: 622.25, oscillator: undefined };
+var e1: Note = { name: 'E5', frequency: 659.25, oscillator: undefined };
 
 interface NoteMap {
     [key: string]: Note;
