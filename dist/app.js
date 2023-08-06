@@ -110,7 +110,7 @@ window.addEventListener('load', () => {
         ctxGain = audioCtx.createGain();
         ctxGain.connect(audioCtx.destination);
         let slider = document.getElementById('gain-slider');
-        slider.value = String(0.8);
+        slider.value = String(0.05);
     }
     catch (err) {
         alert("The JavaScript Web Audio API is not supported by this browser.");
