@@ -2,6 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8"/>
+    <meta name="description" content="In-Browser Synthesizer">
+    <meta name="keywords" content="HTML, CSS, JavaScript, TypeScript, Music, Synthesizer">
+    <meta name="author" content="Rolin Blake">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Browser Synthesizer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,6 +89,7 @@
       </select>
       <button id="start-stop" onclick="handleClick();">Unmute Synthesizer</button>
       <div id="gain-slider-wrap">
+        <h4>Gain: </h4>
         <input id="gain-slider" type="range" class="slider" min="0.01" max="0.5" value="0.05" step=".01">
         <p id="gain-view">0.05</p>
       </div>

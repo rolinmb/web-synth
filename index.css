@@ -24,8 +24,53 @@ main {
 }
 
 #key-view {
-    width: 1250px;
-    height: 100px;
+    width: 100%;
+    max-width: 1000px;
     overflow-x: scroll;
     overflow-y: auto;
+}
+
+#gain-slider-wrap {
+    display: flex;
+    align-items: center;
+}
+
+#gain-slider-wrap h4 {
+    padding-right: 10px;
+}
+
+#gain-slider {
+    flex: 1;
+    margin-left: 10px;
+}
+
+#gain-slider-wrap p {
+    padding-left: 10px;
+}
+
+@media screen and (mx-width: 800px) {
+    main {
+        padding: 10px;
+    }
+
+    #key-view {
+        max-width: 600px;
+    }
+
+    #gain-slider-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #gain-slider-wrap h4 {
+        padding: 0;
+    }
+
+    #gain-slider-wrap p {
+        padding: 0;
+    }
+
+    #gain-slider {
+        margin: 10px 0;
+    }
 }
