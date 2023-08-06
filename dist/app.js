@@ -102,13 +102,15 @@ function handleClick() {
     let slider = document.getElementById('gain-slider');
     let val = slider.valueAsNumber;
     ctxGain === null || ctxGain === void 0 ? void 0 : ctxGain.gain.setValueAtTime(val, (audioCtx === null || audioCtx === void 0 ? void 0 : audioCtx.currentTime) || 0);
-    document.getElementById("gain-view").innerHTML = String(val);
+    document.getElementById("gain-view").innerHTML = val.toString();
 });
 window.addEventListener('load', () => {
     try {
         audioCtx = new AudioContext();
         ctxGain = audioCtx.createGain();
         ctxGain.connect(audioCtx.destination);
+        let slider = document.getElementById('gain-slider');
+        slider.value = String(0.8);
     }
     catch (err) {
         alert("The JavaScript Web Audio API is not supported by this browser.");

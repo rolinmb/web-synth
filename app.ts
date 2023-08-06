@@ -118,7 +118,7 @@ document.getElementById('gain-slider')?.addEventListener('input', () => {
     let slider = document.getElementById('gain-slider') as HTMLInputElement;
     let val: number = slider.valueAsNumber;
     ctxGain?.gain.setValueAtTime(val, audioCtx?.currentTime || 0);
-    document.getElementById("gain-view")!.innerHTML = String(val);
+    document.getElementById("gain-view")!.innerHTML = val.toString();
 });
 
 window.addEventListener('load', () => {
@@ -126,6 +126,8 @@ window.addEventListener('load', () => {
         audioCtx = new AudioContext();
         ctxGain = audioCtx.createGain();
         ctxGain.connect(audioCtx.destination);
+        let slider = document.getElementById('gain-slider') as HTMLInputElement;
+        slider.value = String(0.8);
     } catch (err) {
         alert("The JavaScript Web Audio API is not supported by this browser.");
     }
