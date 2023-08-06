@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 var audioCtx = undefined;
 var ctxGain = undefined;
 var muted = false;
@@ -97,6 +98,12 @@ function handleClick() {
         document.getElementById("top-header").innerHTML = "In-Browser Synthesizer (CURRENTLY MUTED)";
     }
 }
+(_a = document.getElementById('gain-slider')) === null || _a === void 0 ? void 0 : _a.addEventListener('input', () => {
+    let slider = document.getElementById('gain-slider');
+    let val = slider.valueAsNumber;
+    ctxGain === null || ctxGain === void 0 ? void 0 : ctxGain.gain.setValueAtTime(val, (audioCtx === null || audioCtx === void 0 ? void 0 : audioCtx.currentTime) || 0);
+    document.getElementById("gain-view").innerHTML = String(val);
+});
 window.addEventListener('load', () => {
     try {
         audioCtx = new AudioContext();

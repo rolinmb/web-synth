@@ -114,6 +114,13 @@ function handleClick(): void {
     }
 }
 
+document.getElementById('gain-slider')?.addEventListener('input', () => {
+    let slider = document.getElementById('gain-slider') as HTMLInputElement;
+    let val: number = slider.valueAsNumber;
+    ctxGain?.gain.setValueAtTime(val, audioCtx?.currentTime || 0);
+    document.getElementById("gain-view")!.innerHTML = String(val);
+});
+
 window.addEventListener('load', () => {
     try {
         audioCtx = new AudioContext();
