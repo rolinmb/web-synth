@@ -1,6 +1,6 @@
 body {
     font-family: 'PT Sans', sans-serif;
-    background-image: url("bg_v4_1.png");
+    background-image: url("trippy15.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -11,12 +11,21 @@ body {
     place-items: center;
     align-items: center;
     justify-content: center;
+    color: aliceblue;
+}
+
+h1, h2, h3 {
+    color: yellow;
 }
 
 main {
-  width: 100%;
-  max-width: 600px;
-  padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+#keyboard-reference p {
+    color: yellow;
 }
 
 #black-key-table td {
@@ -46,6 +55,18 @@ main {
 
 #gain-slider-wrap p {
     padding-left: 10px;
+}
+
+#note-stuck-notice {
+    color: yellow;
+}
+
+footer a {
+    color: aliceblue;
+}
+
+footer a:hover {
+    color: yellow;
 }
 
 @media screen and (mx-width: 800px) {
