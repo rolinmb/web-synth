@@ -39,12 +39,17 @@ main {
     overflow-y: auto;
 }
 
+#waveform-header {
+    color: pink;
+}
+
 #gain-slider-wrap {
     display: flex;
     align-items: center;
 }
 
 #gain-slider-wrap h4 {
+    color: pink;
     padding-right: 10px;
 }
 
@@ -55,6 +60,27 @@ main {
 
 #gain-slider-wrap p {
     padding-left: 10px;
+}
+
+#distortion-wrap {
+    display: flex;
+    align-items: center;
+}
+
+#distortion-wrap h4 {
+    color: pink;
+}
+
+#distortion-wrap p {
+    color: yellow;
+}
+
+#distortion-wrap ul {
+    list-style: none;
+}
+
+#distortion-amount-slider {
+    flex: 1;
 }
 
 #note-stuck-notice {

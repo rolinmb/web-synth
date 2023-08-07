@@ -1,7 +1,8 @@
 "use strict";
-var _a;
+var _a, _b, _c;
 var audioCtx = undefined;
 var ctxGain = undefined;
+var distortion = undefined;
 var muted = false;
 var c0 = { name: 'C4', frequency: 261.63, oscillator: undefined };
 var cs0 = { name: 'C#4/Db4', frequency: 277.18, oscillator: undefined };
@@ -54,6 +55,10 @@ document.onkeydown = (e) => {
             osc.type = selectElement.value;
             osc.frequency.setValueAtTime(noteMap[keyStr].frequency, audioCtx.currentTime);
             osc.connect(ctxGain).connect(audioCtx.destination);
+            const distOnOff = document.getElementById('distortion-on-off');
+            if (distOnOff.checked) {
+                osc.connect(distortion).connect(audioCtx.destination);
+            }
             if (muted) {
                 osc.start();
             }
@@ -98,19 +103,58 @@ function handleClick() {
         document.getElementById("top-header").innerHTML = "In-Browser Synthesizer (CURRENTLY MUTED)";
     }
 }
-(_a = document.getElementById('gain-slider')) === null || _a === void 0 ? void 0 : _a.addEventListener('input', () => {
+(_a = document.getElementById('gain-slider')) === null || _a === void 0 ? void 0 : _a.addEventListener('input', function () {
     let slider = document.getElementById('gain-slider');
     let val = slider.valueAsNumber;
     ctxGain === null || ctxGain === void 0 ? void 0 : ctxGain.gain.setValueAtTime(val, (audioCtx === null || audioCtx === void 0 ? void 0 : audioCtx.currentTime) || 0);
     document.getElementById("gain-view").innerHTML = val.toString();
 });
-window.addEventListener('load', () => {
+(_b = document.getElementById('distortion-on-off')) === null || _b === void 0 ? void 0 : _b.addEventListener('change', function () {
+    var _a, _b, _c;
+    const distOnOff = document.getElementById('distortion-on-off');
+    const isDistortionOn = distOnOff.checked;
+    for (const key in noteMap) {
+        if (((_a = noteMap[key]) === null || _a === void 0 ? void 0 : _a.oscillator) !== undefined) {
+            if (isDistortionOn) {
+                (_b = noteMap[key].oscillator) === null || _b === void 0 ? void 0 : _b.connect(distortion).connect(audioCtx.destination);
+            }
+            else {
+                (_c = noteMap[key].oscillator) === null || _c === void 0 ? void 0 : _c.disconnect(distortion);
+            }
+        }
+    }
+});
+function getDistortionCurve(amount) {
+    const k = typeof amount === "number" ? amount : 50;
+    const n_samples = 44100;
+    const curve = new Float32Array(n_samples);
+    const deg = Math.PI / 180;
+    for (let i = 0; i < n_samples; i++) {
+        const x = (i * 2) / n_samples - 1;
+        curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+    }
+    return curve;
+}
+(_c = document.getElementById('distortion-amount-slider')) === null || _c === void 0 ? void 0 : _c.addEventListener('input', function () {
+    let slider = document.getElementById('distortion-amount-slider');
+    let val = slider.valueAsNumber;
+    distortion.curve = getDistortionCurve(val);
+    document.getElementById("distortion-amount-view").innerHTML = val.toString();
+});
+window.addEventListener('load', function () {
     try {
         audioCtx = new AudioContext();
         ctxGain = audioCtx.createGain();
         ctxGain.connect(audioCtx.destination);
-        let slider = document.getElementById('gain-slider');
-        slider.value = String(0.05);
+        let gainSlider = document.getElementById('gain-slider');
+        gainSlider.value = String(0.05);
+        distortion = audioCtx.createWaveShaper();
+        distortion.curve = getDistortionCurve(400);
+        distortion.oversample = "2x";
+        distortion.connect(audioCtx.destination);
+        let distortionAmntSlider = document.getElementById('distortion-amount-slider');
+        distortionAmntSlider.value = String(400);
+        document.getElementById('distortion-on-off-view').innerHTML = "Off";
     }
     catch (err) {
         alert("The JavaScript Web Audio API is not supported by this browser.");

@@ -1,5 +1,6 @@
 var audioCtx: AudioContext | undefined = undefined;
 var ctxGain: GainNode | undefined = undefined;
+var distortion: WaveShaperNode | undefined = undefined;
 var muted: boolean = false;
 
 type Note = {
@@ -70,6 +71,10 @@ document.onkeydown = (e) => {
             osc.type = <OscillatorType>selectElement.value;
             osc.frequency.setValueAtTime(noteMap[keyStr].frequency, audioCtx!.currentTime);
             osc.connect(ctxGain!).connect(audioCtx!.destination);
+            const distOnOff = <HTMLInputElement>document.getElementById('distortion-on-off');
+            if (distOnOff.checked) {
+                osc.connect(distortion!).connect(audioCtx!.destination);
+            }
             if (muted) {
                 osc.start();
             }
@@ -114,20 +119,77 @@ function handleClick(): void {
     }
 }
 
-document.getElementById('gain-slider')?.addEventListener('input', () => {
-    let slider = document.getElementById('gain-slider') as HTMLInputElement;
+document.getElementById('gain-slider')?.addEventListener('input', function() {
+    let slider = <HTMLInputElement>document.getElementById('gain-slider');
     let val: number = slider.valueAsNumber;
     ctxGain?.gain.setValueAtTime(val, audioCtx?.currentTime || 0);
     document.getElementById("gain-view")!.innerHTML = val.toString();
 });
 
-window.addEventListener('load', () => {
+document.getElementById('distortion-on-off')?.addEventListener('change', function() {
+    const distOnOff = <HTMLInputElement>document.getElementById('distortion-on-off');
+    const isDistortionOn: boolean = distOnOff.checked;
+
+    for (const key in noteMap) {
+        if (noteMap[key]?.oscillator !== undefined) {
+            if (isDistortionOn) {
+                noteMap[key].oscillator?.connect(distortion!).connect(audioCtx!.destination);
+            } else {
+                noteMap[key].oscillator?.disconnect(distortion!);
+            }
+        }
+    }
+    /*
+    if (!distOnOff.checked) { // Distortion Turned On
+        distOnOff.checked = true;
+        for (const key in noteMap) {
+            if (noteMap[key]?.oscillator !== undefined) {
+                noteMap[key].oscillator?.connect(distortion!).connect(audioCtx!.destination);
+            }
+        }
+    } else {
+        distOnOff.checked = false;
+        for (const key in noteMap) {
+            if (noteMap[key]?.oscillator !== undefined) {
+                noteMap[key].oscillator?.disconnect(distortion!);
+            }
+        }
+    } */
+});
+
+function getDistortionCurve(amount?: number): Float32Array {
+    const k: number = typeof amount === "number" ? amount : 50;
+    const n_samples: number = 44100;
+    const curve: Float32Array = new Float32Array(n_samples);
+    const deg: number = Math.PI / 180;
+    for (let i = 0; i < n_samples; i++) {
+        const x: number = (i * 2) / n_samples - 1;
+        curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+    }
+    return curve;
+}
+
+document.getElementById('distortion-amount-slider')?.addEventListener('input', function() {
+    let slider = <HTMLInputElement>document.getElementById('distortion-amount-slider');
+    let val: number = slider.valueAsNumber;
+    distortion!.curve = getDistortionCurve(val);
+    document.getElementById("distortion-amount-view")!.innerHTML = val.toString();
+});
+
+window.addEventListener('load', function() {
     try {
         audioCtx = new AudioContext();
         ctxGain = audioCtx.createGain();
         ctxGain.connect(audioCtx.destination);
-        let slider = document.getElementById('gain-slider') as HTMLInputElement;
-        slider.value = String(0.05);
+        let gainSlider = <HTMLInputElement>document.getElementById('gain-slider');
+        gainSlider.value = String(0.05);
+        distortion = audioCtx.createWaveShaper();
+        distortion.curve = getDistortionCurve(400);
+        distortion.oversample = <OverSampleType>"2x";
+        distortion.connect(audioCtx.destination);
+        let distortionAmntSlider = <HTMLInputElement>document.getElementById('distortion-amount-slider');
+        distortionAmntSlider.value = String(400);
+        document.getElementById('distortion-on-off-view')!.innerHTML = "Off";
     } catch (err) {
         alert("The JavaScript Web Audio API is not supported by this browser.");
     }
