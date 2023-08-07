@@ -87,7 +87,7 @@
         <option value="sawtooth">Sawtooth</option>
         <option value="triangle">Triangle</option>
       </select>
-      <button id="start-stop" onclick="handleClick();">Unmute Synthesizer</button>
+      <button id="start-stop" onclick="handleOscTypeClick();">Unmute Synthesizer</button>
       <div id="gain-slider-wrap">
         <h4>Gain: </h4>
         <input id="gain-slider" type="range" min="0.01" max="0.5" value="0.05" step=".01">
@@ -117,7 +117,7 @@
       </div>
       <br />
       <p id="note-stuck-notice">
-        If a note is stuck playing you should refresh your browser or select 'Mute/Unmute Synthesizer'. Gain is sometimes sticky and is honestly very loud.
+        If a note is stuck playing you should refresh your browser or select 'Mute/Unmute Synthesizer'. Gain is sometimes sticky and is honestly very loud; you can turn the slider to 0 to fix this.
       </p>
     </main>
     <footer>

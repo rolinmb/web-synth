@@ -100,7 +100,7 @@ document.onkeyup = (e) => {
     document.getElementById("pressed-view")!.innerHTML = JSON.stringify(pressedNoteMap);
 }
 
-function handleClick(): void {
+function handleOscTypeClick(): void {
     muted = !muted;
     if (muted) {
         for (const key in noteMap) {
