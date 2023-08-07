@@ -139,22 +139,6 @@ document.getElementById('distortion-on-off')?.addEventListener('change', functio
             }
         }
     }
-    /*
-    if (!distOnOff.checked) { // Distortion Turned On
-        distOnOff.checked = true;
-        for (const key in noteMap) {
-            if (noteMap[key]?.oscillator !== undefined) {
-                noteMap[key].oscillator?.connect(distortion!).connect(audioCtx!.destination);
-            }
-        }
-    } else {
-        distOnOff.checked = false;
-        for (const key in noteMap) {
-            if (noteMap[key]?.oscillator !== undefined) {
-                noteMap[key].oscillator?.disconnect(distortion!);
-            }
-        }
-    } */
 });
 
 function getDistortionCurve(amount?: number): Float32Array {
