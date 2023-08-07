@@ -83,6 +83,23 @@ main {
     flex: 1;
 }
 
+#compressor-wrap {
+    display: flex;
+    align-items: center;
+}
+
+#compressor-wrap h4 {
+    color: pink;
+}
+
+#compressor-wrap p {
+    color: yellow;
+}
+
+#compressor-wrap ul {
+    list-style: none;
+}
+
 #note-stuck-notice {
     color: yellow;
 }

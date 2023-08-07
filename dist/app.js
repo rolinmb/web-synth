@@ -1,8 +1,9 @@
 "use strict";
-var _a, _b;
+var _a, _b, _c, _d, _e, _f, _g;
 var audioCtx = undefined;
 var ctxGain = undefined;
 var distortion = undefined;
+var compressor = undefined;
 var muted = false;
 var c0 = { name: 'C4', frequency: 261.63, oscillator: undefined };
 var cs0 = { name: 'C#4/Db4', frequency: 277.18, oscillator: undefined };
@@ -54,7 +55,7 @@ document.onkeydown = (e) => {
             const selectElement = document.getElementById("waveform-select");
             osc.type = selectElement.value;
             osc.frequency.setValueAtTime(noteMap[keyStr].frequency, audioCtx.currentTime);
-            osc.connect(ctxGain).connect(distortion).connect(audioCtx.destination);
+            osc.connect(ctxGain).connect(distortion).connect(compressor).connect(audioCtx.destination);
             if (muted) {
                 osc.start();
             }
@@ -79,7 +80,7 @@ document.onkeyup = (e) => {
     }
     document.getElementById("pressed-view").innerHTML = JSON.stringify(pressedNoteMap);
 };
-function handleOscTypeClick() {
+function handleMuteUnmute() {
     muted = !muted;
     if (muted) {
         for (const key in noteMap) {
@@ -122,17 +123,64 @@ function getDistortionCurve(amount) {
     distortion.curve = getDistortionCurve(val);
     document.getElementById("distortion-amount-view").innerHTML = val.toString();
 });
+(_c = document.getElementById('compressor-threshold-slider')) === null || _c === void 0 ? void 0 : _c.addEventListener('input', function () {
+    let slider = document.getElementById('compressor-threshold-slider');
+    let val = slider.valueAsNumber;
+    compressor === null || compressor === void 0 ? void 0 : compressor.threshold.setValueAtTime(val, (audioCtx === null || audioCtx === void 0 ? void 0 : audioCtx.currentTime) || 0);
+    document.getElementById('compressor-threshold-view').innerHTML = val.toString();
+});
+(_d = document.getElementById('compressor-knee-slider')) === null || _d === void 0 ? void 0 : _d.addEventListener('input', function () {
+    let slider = document.getElementById('compressor-knee-slider');
+    let val = slider.valueAsNumber;
+    compressor === null || compressor === void 0 ? void 0 : compressor.knee.setValueAtTime(val, (audioCtx === null || audioCtx === void 0 ? void 0 : audioCtx.currentTime) || 0);
+    document.getElementById('compressor-knee-view').innerHTML = val.toString();
+});
+(_e = document.getElementById('compressor-ratio-slider')) === null || _e === void 0 ? void 0 : _e.addEventListener('input', function () {
+    let slider = document.getElementById('compressor-ratio-slider');
+    let val = slider.valueAsNumber;
+    compressor === null || compressor === void 0 ? void 0 : compressor.ratio.setValueAtTime(val, (audioCtx === null || audioCtx === void 0 ? void 0 : audioCtx.currentTime) || 0);
+    document.getElementById('compressor-ratio-view').innerHTML = val.toString();
+});
+(_f = document.getElementById('compressor-attack-slider')) === null || _f === void 0 ? void 0 : _f.addEventListener('input', function () {
+    let slider = document.getElementById('compressor-attack-slider');
+    let val = slider.valueAsNumber;
+    compressor === null || compressor === void 0 ? void 0 : compressor.attack.setValueAtTime(val, (audioCtx === null || audioCtx === void 0 ? void 0 : audioCtx.currentTime) || 0);
+    document.getElementById('compressor-attack-view').innerHTML = val.toString();
+});
+(_g = document.getElementById('compressor-release-slider')) === null || _g === void 0 ? void 0 : _g.addEventListener('input', function () {
+    let slider = document.getElementById('compressor-release-slider');
+    let val = slider.valueAsNumber;
+    compressor === null || compressor === void 0 ? void 0 : compressor.release.setValueAtTime(val, (audioCtx === null || audioCtx === void 0 ? void 0 : audioCtx.currentTime) || 0);
+    document.getElementById('compressor-release-view').innerHTML = val.toString();
+});
 window.addEventListener('load', function () {
     try {
         audioCtx = new AudioContext();
         ctxGain = audioCtx.createGain();
+        ctxGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
         let gainSlider = document.getElementById('gain-slider');
         gainSlider.value = String(0.01);
         distortion = audioCtx.createWaveShaper();
-        distortion.curve = getDistortionCurve(400);
+        distortion.curve = getDistortionCurve(0);
         distortion.oversample = "2x";
         let distortionAmntSlider = document.getElementById('distortion-amount-slider');
-        distortionAmntSlider.value = String(100);
+        distortionAmntSlider.value = String(0);
+        compressor = audioCtx.createDynamicsCompressor();
+        compressor.threshold.setValueAtTime(-50, audioCtx.currentTime);
+        let compressorThresholdSlider = document.getElementById('compressor-threshold-slider');
+        compressorThresholdSlider.value = String(-50);
+        compressor.knee.setValueAtTime(40, audioCtx.currentTime);
+        let compressorKneeSlider = document.getElementById('compressor-knee-slider');
+        compressorKneeSlider.value = String(40);
+        compressor.ratio.setValueAtTime(12, audioCtx.currentTime);
+        let compressorRatioSlider = document.getElementById('compressor-ratio-slider');
+        compressorRatioSlider.value = String(12);
+        compressor.attack.setValueAtTime(0, audioCtx.currentTime);
+        let compressorAttackSlider = document.getElementById('compressor-attack-slider');
+        compressorAttackSlider.value = String(0);
+        compressor.release.setValueAtTime(0.25, audioCtx.currentTime);
+        let compressorReleaseSlider = document.getElementById('compressor-release-slider');
+        compressorReleaseSlider.value = String(0.25);
     }
     catch (err) {
         alert("The JavaScript Web Audio API is not supported by this browser.");

@@ -87,19 +87,49 @@
         <option value="sawtooth">Sawtooth</option>
         <option value="triangle">Triangle</option>
       </select>
-      <button id="start-stop" onclick="handleOscTypeClick();">Unmute Synthesizer</button>
-      <div id="gain-slider-wrap">
-        <h4>Gain: </h4>
-        <input id="gain-slider" type="range" min="0.0025" max="0.15" value="0.01" step=".0025">
+      <button id="start-stop" onclick="handleMuteUnmute();">Unmute Synthesizer</button>
+      <div id="gain-slider-wrap" class="param-wrap">
+        <h4>Master Gain</h4>
+        <input id="gain-slider" type="range" min="0.0025" max="0.15" value="0.01" step=".0025" />
         <p id="gain-view">0.01</p>
       </div>
-      <div id="distortion-wrap">
+      <div id="distortion-wrap" class="param-wrap">
         <h4>Distortion</h4>
         <ul id="distortion-inputs-list">
           <li>
             <p>Distortion Amount: </p>
-            <input id="distortion-amount-slider" type="range" min="0" max="500" value="100" step="1"/>
-            <p id="distortion-amount-view">100</p>
+            <input id="distortion-amount-slider" type="range" min="0" max="500" value="0" step="1" />
+            <p id="distortion-amount-view">0</p>
+          </li>
+        </ul>
+      </div>
+      <div id="compressor-wrap" class="param-wrap">
+        <h4>Compressor</h4>
+        <ul id="compressor-inputs-list">
+          <li>
+            <p>Threshold: </p>
+            <input id="compressor-threshold-slider" type="range" min="-50" max="0" value="-50" step="1" />
+            <p id="compressor-threshold-view">-50</p>
+          </li>
+          <li>
+            <p>Knee: </p>
+            <input id="compressor-knee-slider" type="range" min="0" max="100" value="40" step="1" />
+            <p id="compressor-knee-view">40</p>
+          </li>
+          <li>
+            <p>Ratio: </p>
+            <input id="compressor-ratio-slider" type="range" min="1" max="12" value="12" step="0.25" />
+            <p id="compressor-ratio-view">12</p>
+          </li>
+          <li>
+            <p>Attack: </p>
+            <input id="compressor-attack-slider" type="range" min="0" max="1000" value="0" step="0.25"/>
+            <p id="compressor-attack-view">0</p>
+          </li>
+          <li>
+            <p>Release: </p>
+            <input id="compressor-release-slider" type="range" min="0" max="1000" value="0.25" step="0.25"/>
+            <p id="compressor-release-view">0.25</p>
           </li>
         </ul>
       </div>
