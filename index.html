@@ -90,28 +90,16 @@
       <button id="start-stop" onclick="handleOscTypeClick();">Unmute Synthesizer</button>
       <div id="gain-slider-wrap">
         <h4>Gain: </h4>
-        <input id="gain-slider" type="range" min="0.01" max="0.5" value="0.05" step=".01">
-        <p id="gain-view">0.05</p>
+        <input id="gain-slider" type="range" min="0.0025" max="0.15" value="0.01" step=".0025">
+        <p id="gain-view">0.01</p>
       </div>
       <div id="distortion-wrap">
         <h4>Distortion</h4>
         <ul id="distortion-inputs-list">
           <li>
-            <p>Distortion On / Off: </p>
-            <input id="distortion-on-off" type="checkbox" />
-            <p id="distortion-on-off-view">Off</p>
-          </li>
-          <li>
             <p>Distortion Amount: </p>
-            <input id="distortion-amount-slider" type="range" min="0" max="500" value="400" step="1"/>
-            <p id="distortion-amount-view">400</p>
-          </li>
-          <li>
-            <p>Distortion Oversampling: </p>
-            <select id="oversample-select">
-              <option value="2x" selected="selected">2x</option>
-              <option value="4x">4x</option>
-            </select>
+            <input id="distortion-amount-slider" type="range" min="0" max="500" value="100" step="1"/>
+            <p id="distortion-amount-view">100</p>
           </li>
         </ul>
       </div>
