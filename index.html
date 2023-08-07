@@ -97,17 +97,17 @@
         <h4>Distortion</h4>
         <ul id="distortion-inputs-list">
           <li>
-            <p>Distortion On / Off</p>
+            <p>Distortion On / Off: </p>
             <input id="distortion-on-off" type="checkbox" />
             <p id="distortion-on-off-view">Off</p>
           </li>
           <li>
-            <p>Amount: </p>
+            <p>Distortion Amount: </p>
             <input id="distortion-amount-slider" type="range" min="0" max="500" value="400" step="1"/>
             <p id="distortion-amount-view">400</p>
           </li>
           <li>
-            <p>Oversampling: </p>
+            <p>Distortion Oversampling: </p>
             <select id="oversample-select">
               <option value="2x" selected="selected">2x</option>
               <option value="4x">4x</option>
@@ -116,7 +116,9 @@
         </ul>
       </div>
       <br />
-      <p id="note-stuck-notice">If a note is stuck playing you should refresh your browser or select 'Mute/Unmute Synthesizer'.</p>
+      <p id="note-stuck-notice">
+        If a note is stuck playing you should refresh your browser or select 'Mute/Unmute Synthesizer'. Gain is sometimes sticky and is honestly very loud.
+      </p>
     </main>
     <footer>
       &copy; 2023 - Rolin Blake - <a href="https://github.com/rolinmb/web-synth">Web Synthesizer Repo</a>

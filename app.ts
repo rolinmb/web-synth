@@ -2,6 +2,7 @@ var audioCtx: AudioContext | undefined = undefined;
 var ctxGain: GainNode | undefined = undefined;
 var distortion: WaveShaperNode | undefined = undefined;
 var muted: boolean = false;
+var distorting: boolean = false;
 
 type Note = {
     name: string;
@@ -70,10 +71,10 @@ document.onkeydown = (e) => {
             const selectElement = <HTMLSelectElement>document.getElementById("waveform-select")!;
             osc.type = <OscillatorType>selectElement.value;
             osc.frequency.setValueAtTime(noteMap[keyStr].frequency, audioCtx!.currentTime);
-            osc.connect(ctxGain!).connect(audioCtx!.destination);
-            const distOnOff = <HTMLInputElement>document.getElementById('distortion-on-off');
-            if (distOnOff.checked) {
-                osc.connect(distortion!).connect(audioCtx!.destination);
+            if (distorting) {
+                osc.connect(ctxGain!).connect(distortion!).connect(audioCtx!.destination);
+            } else {
+                osc.connect(ctxGain!).connect(audioCtx!.destination);
             }
             if (muted) {
                 osc.start();
@@ -127,15 +128,14 @@ document.getElementById('gain-slider')?.addEventListener('input', function() {
 });
 
 document.getElementById('distortion-on-off')?.addEventListener('change', function() {
-    const distOnOff = <HTMLInputElement>document.getElementById('distortion-on-off');
-    const isDistortionOn: boolean = distOnOff.checked;
-
+    distorting = !distorting;
     for (const key in noteMap) {
         if (noteMap[key]?.oscillator !== undefined) {
-            if (isDistortionOn) {
+            if (distorting) {
                 noteMap[key].oscillator?.connect(distortion!).connect(audioCtx!.destination);
             } else {
                 noteMap[key].oscillator?.disconnect(distortion!);
+                noteMap[key].oscillator?.connect(audioCtx!.destination);
             }
         }
     }
@@ -164,13 +164,11 @@ window.addEventListener('load', function() {
     try {
         audioCtx = new AudioContext();
         ctxGain = audioCtx.createGain();
-        ctxGain.connect(audioCtx.destination);
         let gainSlider = <HTMLInputElement>document.getElementById('gain-slider');
         gainSlider.value = String(0.05);
         distortion = audioCtx.createWaveShaper();
         distortion.curve = getDistortionCurve(400);
         distortion.oversample = <OverSampleType>"2x";
-        distortion.connect(audioCtx.destination);
         let distortionAmntSlider = <HTMLInputElement>document.getElementById('distortion-amount-slider');
         distortionAmntSlider.value = String(400);
         document.getElementById('distortion-on-off-view')!.innerHTML = "Off";
